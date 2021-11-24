@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="style.css" rel="stylesheet" />
+		<title>Document</title>
+	</head>
+
+	<body>
+		<div class="container">
+			<img src="image.jpg" alt="Heading image" width="510" />
+			<h1>Calculator</h1>
+			<div class="grid-2-cols">
+				<div class="frame1">
+					<h2>ADD</h2>
+					<form
+						action="http://localhost:8080/add"
+						method="POST"
+						target="add-result"
+					>
+						<input
+							class="input"
+							id="addId1"
+							type="number"
+							step="0.01"
+							name="number1"
+							placeholder="0"
+						/>
+						<input
+							class="input"
+							id="addId2"
+							type="number"
+							step="0.01"
+							name="number2"
+							placeholder="0"
+						/>
+						<div>
+							<button class="button" id="addButton" type="submit">Add</button>
+						</div>
+					</form>
+					<iframe class="add-frame" name="add-result" frameborder="0"> </iframe>
+				</div>
+				<div class="frame2">
+					<h2>SUBTRACT</h2>
+					<form
+						action="http://localhost:8080/subtract"
+						method="POST"
+						target="sub-result"
+					>
+						<input
+							class="input"
+							id="subId1"
+							type="number"
+							step="0.01"
+							name="number1"
+							placeholder="0"
+						/>
+						<input
+							class="input"
+							id="subId2"
+							type="number"
+							step="0.01"
+							name="number2"
+							placeholder="0"
+						/>
+						<div>
+							<button class="button" id="subButton" type="submit">
+								Subtract
+							</button>
+						</div>
+					</form>
+					<iframe name="sub-result" frameborder="0"> </iframe>
+				</div>
+				<div class="frame3">
+					<h2>MULTIPLY</h2>
+					<form
+						action="http://localhost:8080/multiply"
+						method="POST"
+						target="mlt-result"
+					>
+						<input
+							class="input"
+							id="mltId1"
+							type="number"
+							step="0.01"
+							name="number1"
+							placeholder="0"
+						/>
+						<input
+							class="input"
+							id="mltId2"
+							type="number"
+							step="0.01"
+							name="number2"
+							placeholder="0"
+						/>
+						<div>
+							<button class="button" id="mltButtonId" type="submit">
+								Multiply
+							</button>
+						</div>
+					</form>
+					<iframe name="mlt-result" frameborder="0"> </iframe>
+				</div>
+				<div class="frame4">
+					<h2>DIVIDE</h2>
+					<form
+						action="http://localhost:8080/division"
+						method="POST"
+						target="dv-result"
+					>
+						<input
+							class="input"
+							id="divId1"
+							type="number"
+							step="0.01"
+							name="number1"
+							placeholder="0"
+						/>
+						<input
+							class="input"
+							id="divId2"
+							type="number"
+							step="0.01"
+							name="number2"
+							placeholder="0"
+						/>
+						<div>
+							<button class="button" id="divButtonId" type="submit">
+								Divide
+							</button>
+						</div>
+					</form>
+					<iframe name="dv-result" frameborder="0"> </iframe>
+				</div>
+			</div>
+
+			<!-- the purpose of this iframe is to display the result from backend -->
+		</div>
+	</body>
+</html>
