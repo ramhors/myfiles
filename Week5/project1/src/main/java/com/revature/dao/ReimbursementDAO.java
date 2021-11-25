@@ -21,8 +21,8 @@ public class ReimbursementDAO {
 		java.sql.Timestamp sqlTS = new java.sql.Timestamp(utilDate.getTime());
 		
 		try (Connection conn = JDBCUtility.getConnection()) {
-			String sql = "INSERT into reimbursement(reimb_submitted,reimb_resolved ,reimb_status,reimb_type ,reimb_description,reimb_receipt ,reimb_author)VALUES"
-					+ "(?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO reimbursement(reimb_amount,reimb_date,reimb_type,reimb_description,reimb_author)VALUES\r\n"
+					+ "(300,'2021-01-23','Mileage','Mileage for training trip',1)";
 			
 			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			
@@ -35,15 +35,15 @@ public class ReimbursementDAO {
 			ps.setInt(7, employee.getAuthor());
 			
 			
-			int numberOfRecordInserted =pstmt.executeUpdate();
+			int numberOfRecordInserted =ps.executeUpdate();
 			if(numberOfRecordInserted != 1) {
 				throw new SQLException("Unsuccesful submission");
 			}
-			ResultSet rs = pstmt.getGeneratedKeys();
+			ResultSet rs = ps.getGeneratedKeys();
 			rs.next();
 			int generatedKeyId = rs.getInt(1);
 			
-			
+			return null;
 		}
 	}
 }

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.revature.dto.LoginDTO;
+import com.revature.dto.MessageDTO;
 import com.revature.model.User;
 import com.revature.service.UserService;
 
@@ -22,6 +23,7 @@ public class AuthenticationController implements Controller{
 		LoginDTO loginDTO = ctx.bodyAsClass(LoginDTO.class);
 		User user = this.userService.getUserByUsernameAndPassword(loginDTO.getUsername(), loginDTO.getPassword());
 		
+		
 		HttpServletRequest req = ctx.req;				
 		
 			HttpSession session = req.getSession();
@@ -37,11 +39,24 @@ public class AuthenticationController implements Controller{
 		ctx.json("You are logged out");
 	};
 	
+	private Handler checkIfLoggedIn = (ctx) -> {
+		HttpSession session = ctx.req.getSession();
+		//Checking if session.getAttribute('currentuser') is not or not
+		if(!(session.getAttribute("currentuser") == null)) {
+			ctx.json(session.getAttribute("currentuser"));
+			ctx.status(200);
+			ctx.json(new MessageDTO("You are logged in"));
+		}else {
+			ctx.json(new MessageDTO("User is not logged in"));
+		}
+	};
+	
 	
 	@Override
 	public void mapEndpoints(Javalin app) {
 		app.post("/login", login);
-		app.post("/logout", logout);		
+		app.post("/logout", logout);
+		app.get("/checkloginstatus", checkIfLoggedIn);
 		
 	}
 
