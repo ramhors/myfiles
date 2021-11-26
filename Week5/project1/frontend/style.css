@@ -2,14 +2,22 @@
 	margin: 0;
 	padding: 0;
 }
-.wrapper {
-	background-color: aliceblue;
-	width: 600px;
+.container {
+	/*	background-color: aliceblue; */
+	width: 550px;
+	height: auto;
+	align-items: center;
+	margin-top: 200px;
+	margin-left: 400px;
 }
-.wrapper {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+
+.section1 {
+	margin-left: 140px;
 }
+.section2 {
+	margin-left: 140px;
+}
+
 .username-filed {
 	margin-bottom: 20px;
 }
@@ -23,19 +31,44 @@
 	font-size: 20px;
 }
 
-.login-btn {
-	font-size: 20px;
+.section3 {
+	margin-left: 160px;
 }
 
-.section1 {
-	margin-top: 15;
+.login-btn {
+	margin-top: 30px;
+	margin-left: 50;
+	width: 180px;
+	font-size: 20px;
+	font-weight: bold;
+	color: #ffff;
+	background-color: #f12bb2;
+	margin-bottom: 40px;
 }
+
 .p-label {
 	font-size: 20px;
 	font-weight: bold;
 	margin-top: 20px;
 }
+
+.grid1 {
+	display: grid;
+	grid-template-columns: 1fr;
+	background-color: #ffff;
+}
 body {
 	background-color: #ffe066;
 	width: 600fr;
+}
+h1 {
+	padding-top: 20px;
+	margin-left: 80px;
+	color: blue;
+}
+button:hover {
+	background-color: rgb(57, 243, 72);
+}
+button:focus {
+	color: red;
 }

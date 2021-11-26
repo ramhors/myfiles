@@ -11,14 +11,14 @@ public class AuthorizationService {
 	 * @author rjm20
 	 *
 	 */
-	public void authorizeRegularAndAdmin(User user) throws UnauthorizedException {
+	public void authorizeRegularAndManager(User user) throws UnauthorizedException {
 		
 		if (user == null || !(user.getUserRole().equals("employee") || user.getUserRole().equals("manager"))) {
 			throw new UnauthorizedException("You have to be employee or a manager");
 		}			
 	}
 	
-	public void authorizeAdmin(User user) throws UnauthorizedException {
+	public void authorizeManager(User user) throws UnauthorizedException {
 		if(user == null || !user.getUserRole().equals("manager")) {
 			throw new UnauthorizedException("You must be a manager to access this resource");
 		}

@@ -28,7 +28,7 @@ public class UserController implements Controller{
 	private Handler getUserById = (ctx) -> {
 		User user = (User) ctx.req.getSession().getAttribute("currentuser");
 		//Authorizing either admin or regular
-		this.authorizationService.authorizeRegularAndAdmin(user);
+		this.authorizationService.authorizeRegularAndManager(user);
 		
 		String id = ctx.pathParam("userId");
 		
@@ -40,7 +40,7 @@ public class UserController implements Controller{
 		AddOrUpdateUsersDTO dto = ctx.bodyAsClass(AddOrUpdateUsersDTO.class);		
 		User user = (User) ctx.req.getSession().getAttribute("currentuser");
 		
-	 this.authorizationService.authorizeAdmin(user);
+	 this.authorizationService.authorizeManager(user);;
 	 
 //	 User employee = this.userService.addUser(dto);
 //	 

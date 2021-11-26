@@ -48,6 +48,7 @@ public class AuthenticationController implements Controller{
 			ctx.json(new MessageDTO("You are logged in"));
 		}else {
 			ctx.json(new MessageDTO("User is not logged in"));
+			ctx.status(401);
 		}
 	};
 	

@@ -8,33 +8,27 @@
 		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
-		<section class="wrapper">
-			<div id="login-info">
+		<div class="container">
+			<div class="grid1" id="login-info">
 				<h1>Login to Management App</h1>
 				<div class="section1">
 					<p class="p-label">Username *</p>
-					<input
-						id="username"
-						class="inputs"
-						type="text"
-						placeholder="Enter Username"
-						required
-					/>
+					<input id="username" class="inputs" type="text" required />
 				</div>
-				<div>
+				<div class="section2">
 					<p class="p-label">Password *</p>
 					<input
 						class="inputs"
 						id="password"
 						type="password"
-						placeholder="Your password"
+						aria-required="true"
 					/>
 				</div>
-				<div>
+				<div class="section3">
 					<button class="login-btn" id="login-btn">Login</button>
 				</div>
 			</div>
-		</section>
+		</div>
 
 		<script src="index.js"></script>
 	</body>
