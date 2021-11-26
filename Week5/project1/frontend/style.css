@@ -1,3 +1,15 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+.wrapper {
+	background-color: aliceblue;
+	width: 600px;
+}
+.wrapper {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+}
 .username-filed {
 	margin-bottom: 20px;
 }
@@ -6,4 +18,24 @@
 }
 #login-info {
 	display: block;
+}
+.inputs {
+	font-size: 20px;
+}
+
+.login-btn {
+	font-size: 20px;
+}
+
+.section1 {
+	margin-top: 15;
+}
+.p-label {
+	font-size: 20px;
+	font-weight: bold;
+	margin-top: 20px;
+}
+body {
+	background-color: #ffe066;
+	width: 600fr;
 }
