@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class AddOrUpdateUsersDTO {
 
-	private String username;
+	private String userName;
 	private String password;
 	private String firstName;
 	private String lastName;
@@ -13,10 +13,10 @@ public class AddOrUpdateUsersDTO {
 	
 	public AddOrUpdateUsersDTO() {}
 
-	public AddOrUpdateUsersDTO(String username, String password, String firstName, String lastName, String email,
+	public AddOrUpdateUsersDTO(String userName, String password, String firstName, String lastName, String email,
 			String userRole) {
 		super();
-		this.username = username;
+		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -25,11 +25,11 @@ public class AddOrUpdateUsersDTO {
 	}
 
 	public String getUserName() {
-		return username;
+		return userName;
 	}
 
 	public void setUserName(String userName) {
-		this.username = userName;
+		this.userName = userName;
 	}
 
 	public String getPassword() {
@@ -74,7 +74,7 @@ public class AddOrUpdateUsersDTO {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, firstName, lastName, password, username, userRole);
+		return Objects.hash(email, firstName, lastName, password, userName, userRole);
 	}
 
 	@Override
@@ -88,14 +88,15 @@ public class AddOrUpdateUsersDTO {
 		AddOrUpdateUsersDTO other = (AddOrUpdateUsersDTO) obj;
 		return Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName)
 				&& Objects.equals(lastName, other.lastName) && Objects.equals(password, other.password)
-				&& Objects.equals(username, other.username) && Objects.equals(userRole, other.userRole);
+				&& Objects.equals(userName, other.userName) && Objects.equals(userRole, other.userRole);
 	}
 
 	@Override
 	public String toString() {
-		return "addOrUpdateUsersDTO [userName=" + username + ", password=" + password + ", firstName=" + firstName
+		return "AddOrUpdateUsersDTO [userName=" + userName + ", password=" + password + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", email=" + email + ", userRole=" + userRole + "]";
-	};
+	}
+
 	
 	
 }

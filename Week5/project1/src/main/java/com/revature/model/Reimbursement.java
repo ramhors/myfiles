@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Reimbursement {
 
 	private int reimbId;
+	private double amount;
 	private String dateSubmitted;
 	private String dateResolved;
 	private String status;
@@ -16,10 +17,11 @@ public class Reimbursement {
 	
 	public Reimbursement() {}
 
-	public Reimbursement(int reimbId, String dateSubmitted, String dateResolved, String status, String type,
-			String description, String receipt, int author, int resolver) {
+	public Reimbursement(int reimbId, double amount, String dateSubmitted, String dateResolved, String status,
+			String type, String description, String receipt, int author, int resolver) {
 		super();
 		this.reimbId = reimbId;
+		this.amount = amount;
 		this.dateSubmitted = dateSubmitted;
 		this.dateResolved = dateResolved;
 		this.status = status;
@@ -28,7 +30,8 @@ public class Reimbursement {
 		this.receipt = receipt;
 		this.author = author;
 		this.resolver = resolver;
-	}
+	}	
+	
 
 	public int getReimbId() {
 		return reimbId;
@@ -36,6 +39,14 @@ public class Reimbursement {
 
 	public void setReimbId(int reimbId) {
 		this.reimbId = reimbId;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
 
 	public String getDateSubmitted() {
@@ -104,7 +115,8 @@ public class Reimbursement {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(author, dateResolved, dateSubmitted, description, receipt, reimbId, resolver, status, type);
+		return Objects.hash(amount, author, dateResolved, dateSubmitted, description, receipt, reimbId, resolver,
+				status, type);
 	}
 
 	@Override
@@ -116,7 +128,8 @@ public class Reimbursement {
 		if (getClass() != obj.getClass())
 			return false;
 		Reimbursement other = (Reimbursement) obj;
-		return author == other.author && Objects.equals(dateResolved, other.dateResolved)
+		return Double.doubleToLongBits(amount) == Double.doubleToLongBits(other.amount) && author == other.author
+				&& Objects.equals(dateResolved, other.dateResolved)
 				&& Objects.equals(dateSubmitted, other.dateSubmitted) && Objects.equals(description, other.description)
 				&& Objects.equals(receipt, other.receipt) && reimbId == other.reimbId && resolver == other.resolver
 				&& Objects.equals(status, other.status) && Objects.equals(type, other.type);
@@ -124,10 +137,11 @@ public class Reimbursement {
 
 	@Override
 	public String toString() {
-		return "Reimbursement [reimbId=" + reimbId + ", dateSubmitted=" + dateSubmitted + ", dateResolved="
-				+ dateResolved + ", status=" + status + ", type=" + type + ", description=" + description + ", receipt="
-				+ receipt + ", author=" + author + ", resolver=" + resolver + "]";
-	};
+		return "Reimbursement [reimbId=" + reimbId + ", amount=" + amount + ", dateSubmitted=" + dateSubmitted
+				+ ", dateResolved=" + dateResolved + ", status=" + status + ", type=" + type + ", description="
+				+ description + ", receipt=" + receipt + ", author=" + author + ", resolver=" + resolver + "]";
+	}
+
 	
 	
 		

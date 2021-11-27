@@ -15,8 +15,7 @@ public class UserDAO {
 	public User addUsers(AddOrUpdateUsersDTO user) throws SQLException {
 
 		try (Connection conn = JDBCUtility.getConnection()) {
-			String sql = "INSERT INTO project1.users(user_username,user_password,user_first_name,user_last_name,user_email,user_role)VALUES\r\n"
-					+ "(?,?,?,?,?,?)";
+			String sql = "INSERT INTO project1.users(user_username,user_password,user_first_name,user_last_name,user_email,user_role)VALUES(?,?,?,?,?,?)";
 
 			// Setting up the preparedStatement and generate the auto_increment id
 			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

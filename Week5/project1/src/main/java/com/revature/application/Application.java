@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import com.revature.controller.AuthenticationController;
 import com.revature.controller.Controller;
 import com.revature.controller.ExceptionMapper;
+import com.revature.controller.ReimbursementController;
 import com.revature.controller.UserController;
 
 import io.javalin.Javalin;
@@ -23,7 +24,7 @@ public class Application {
 		
 		Logger logger = LoggerFactory.getLogger(Application.class);
 		
-		mapControllers(app, new AuthenticationController(), new UserController());
+		mapControllers(app, new AuthenticationController(), new UserController(), new ReimbursementController());
 		
 		ExceptionMapper mapper = new ExceptionMapper();
 		mapper.mapExceptions(app);	
