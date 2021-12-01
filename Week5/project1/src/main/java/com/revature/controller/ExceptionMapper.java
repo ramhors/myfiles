@@ -44,5 +44,10 @@ public class ExceptionMapper {
 			ctx.status(400);
 			ctx.json(new MessageDTO(e.getMessage()));
 		});
+		
+		app.exception(NumberFormatException.class, (e, ctx) -> {
+			ctx.status(400);
+			ctx.json(new MessageDTO(e.getMessage()));
+		});
 	}
 }

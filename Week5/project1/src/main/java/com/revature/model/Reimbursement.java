@@ -30,7 +30,17 @@ public class Reimbursement {
 		this.receipt = receipt;
 		this.author = author;
 		this.resolver = resolver;
-	}	
+	}
+	
+	public Reimbursement(int reimbId, double amount, String type, String description, int author,String dateSubmitted) {
+		super();
+		this.reimbId = reimbId;
+		this.amount = amount;
+		this.type = type;
+		this.description = description;		
+		this.author = author;
+		this.dateSubmitted = dateSubmitted;
+	}
 	
 
 	public int getReimbId() {
