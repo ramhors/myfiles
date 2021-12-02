@@ -69,6 +69,24 @@ public class ReimbursementDAO {
 	}
 }	
 	
+	public InputStream getReceiptFromReimbursementById(int id) throws SQLException {
+		try(Connection conn = JDBCUtility.getConnection()) {
+			String sql = "select reimb_receipt from project1.reimbursement WHERE reimb_id = ?;";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);			
+			
+			ps.setInt(1, id);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				InputStream image = rs.getBinaryStream("reimb_receipt");
+				System.out.println(image);
+				return image;
+			}
+			return null;
+		}
+	}
 	
 	public Reimbursement addReimbursement(double amount,String reimbursementType, String description, int authorId, InputStream image) throws SQLException {
 		

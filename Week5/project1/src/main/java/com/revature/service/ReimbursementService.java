@@ -9,6 +9,7 @@ import java.util.Set;
 import com.revature.dao.ReimbursementDAO;
 import com.revature.dto.AddReimbursementDTO;
 import com.revature.exception.InvalidParameterException;
+import com.revature.exception.ReceiptNotFoundException;
 import com.revature.exception.ReimbursementAlreadyResolvedException;
 import com.revature.exception.ReimbursementNotFound;
 import com.revature.exception.UnauthorizedException;
@@ -152,5 +153,36 @@ public class ReimbursementService {
 			throw new InvalidParameterException("Id provided is not an int");
 		}
 	}
+	
+	public InputStream getImageFromReimbursementById(User currentlyLoggedInUser,String reimbursementId) throws SQLException, UnauthorizedException,ReceiptNotFoundException, InvalidParameterException{
+		try {
+			int id = Integer.parseInt(reimbursementId);
+			
+			if(currentlyLoggedInUser.getUserRole().equals("employee")) {
+			int employeeId = currentlyLoggedInUser.getUserId();
+			List<Reimbursement> reimbursementBelongToEmployee = this.reimbursementDao.getAllReimbursementByEmployee(employeeId);
+			
+			Set<Integer> reimbursementIdsEncoutered = new HashSet<>();
+			for (Reimbursement r : reimbursementBelongToEmployee) {
+				reimbursementIdsEncoutered.add(r.getReimbId());
+			}
+			if(!reimbursementIdsEncoutered.contains(id)) {
+				throw new UnauthorizedException("You can not access a receipt that does not belong to yourself");
+			}
+		}
+		//Grabbing the image
+		InputStream image = this.reimbursementDao.getReceiptFromReimbursementById(id);
+		
+		if(image == null) {
+			throw new ReceiptNotFoundException("Receipt was not found for reimbursement id " + id);
+		}
+		
+		return image;
+	}catch(NumberFormatException e) {
+		throw new InvalidParameterException("Reimbursement id supplied must be an int");
+	}
+	
+	}
+	
 
 }

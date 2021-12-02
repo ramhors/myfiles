@@ -40,12 +40,14 @@ public class UserController implements Controller{
 		AddOrUpdateUsersDTO dto = ctx.bodyAsClass(AddOrUpdateUsersDTO.class);		
 		User user = (User) ctx.req.getSession().getAttribute("currentuser");
 		
+				
 		this.authorizationService.authorizeManager(user);;
 	 
 	 if(user.getUserRole().equals("manager")) {
 		 this.userService.addUser(dto);
 			
 			ctx.json(user);
+			ctx.status(404);
 	 }	 
 		
 		

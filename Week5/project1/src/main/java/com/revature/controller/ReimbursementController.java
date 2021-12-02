@@ -35,53 +35,8 @@ public class ReimbursementController implements Controller{
 		List<Reimbursement> reimbursements = this.reimbursementService.getReimbursement(currentLoggedInUser);
 		
 		ctx.json(reimbursements);
-	};
+	};	
 	
-	private Handler addReimbursement = (ctx) -> {
-		Reimbursement reimbursement = new Reimbursement();
-		
-		User currentlyLoggedInUser = (User) ctx.req.getSession().getAttribute("currentuser");
-		this.authService.authorizeRegularAndManager(currentlyLoggedInUser);
-		
-		String reimbursementType = ctx.formParam("reimb_type");		
-		String amount = ctx.formParam("reimb_amount");
-		String description = ctx.formParam("description");				
-		
-		UploadedFile file = ctx.uploadedFile("reimbursement_image");
-		
-		if(file == null) {
-			ctx.status(400);
-			ctx.json(new MessageDTO("Must have an image to upload"));
-			return;
-		}
-		
-		if(reimbursementType == null) {
-			ctx.status(400);
-			ctx.json(new MessageDTO("Type filed can not be empty"));
-		}
-		
-		if(amount == null) {
-			ctx.status(400);
-			ctx.json(new MessageDTO("Amount field can not be is empty"));
-		}
-		
-		if(description == null) {
-			ctx.status(400);
-			ctx.json(new MessageDTO("Description field can not be empty"));
-		}
-		
-		//Getting the file
-		InputStream content = file.getContent();
-		
-		Tika tika = new Tika();
-		//Reject the invalid image
-		String mimeType = tika.detect(content);
-		
-		//Service layer invocation
-	//	Reimbursement addedReimbursement = this.reimbursementService.addReimbursement(currentlyLoggedInUser, amount,description, mimeType,reimbursementType , content);
-	//	ctx.json(addedReimbursement);
-		ctx.status(201);
-	};
 	
 	private Handler submitReimbursement = (ctx) -> {
 		User currentlyLoggedInUser = (User) ctx.req.getSession().getAttribute("currentuser");
@@ -144,12 +99,28 @@ public class ReimbursementController implements Controller{
 		ctx.json(updateReimbursement);
 	};
 	
+	private Handler getReceiptFromReimbursementById = (ctx) -> {
+		
+		User currentlyLoggedInUser = (User) ctx.req.getSession().getAttribute("currentuser");
+		this.authService.authorizeRegularAndManager(currentlyLoggedInUser);
+		
+		String reimbursementId = ctx.pathParam("id");
+		
+		InputStream image = this.reimbursementService.getImageFromReimbursementById(currentlyLoggedInUser, reimbursementId);
+		
+		Tika tika = new Tika();
+		String mimeType = tika.detect(image);
+		
+		ctx.contentType(mimeType);
+		ctx.result(image);
+	};
+	
 	@Override
 	public void mapEndpoints(Javalin app) {
 		app.get("/reimbursements", getReimbursement);
-		app.get("/reimbursements/{id}", getReimbursementById);
+		app.get("/reimbursements/{id}", getReimbursementById);		
+		app.get("/reimbursements/{id}/image", getReceiptFromReimbursementById);
 		
-		//app.post("/reimbursements", addReimbursement);
 		app.post("/reimbursements", submitReimbursement);
 		
 		app.patch("/reimbursements/{id}/status", updateReimbursement);
