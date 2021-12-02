@@ -1,348 +1,144 @@
-// Negative test
-	@Test
-	public void testGetAllClientsSQLExceptionOnOccursNegative() throws SQLException {
 
-		ClientDAO mockClientDao = mock(ClientDAO.class);
 
-		when(mockClientDao.getAllClients()).thenThrow(SQLException.class);
+	
 
-		ClientService clientService = new ClientService(mockClientDao);
+	// Yesterday we had notes on Cucumber parameterization
+	// {double} is an example of an "inline" parameter
+	// These parameters correspond to values defined in the feature file (arguments)
+	
 
-		Assertions.assertThrows(SQLException.class, () -> {
-
-			clientService.getAllClient();
-		});
-
+	// Yesterday we had notes on Cucumber parameterization
+	// {double} is an example of an "inline" parameter
+	// These parameters correspond to values defined in the feature file (arguments)
+	@When("I type in the number {double} into the right add input")
+	public void i_type_in_the_number_into_the_right_add_input(Double double1) {
+	    WebElement rightAddInput = driver.findElement(By.xpath("//form[@target='addResult']/input[@name='number2']"));
+	    
+	    rightAddInput.sendKeys("" + double1);
 	}
 
-	// Positive Test for client by Id
-	@Test
-	public void testGetClientByIdPositive() throws SQLException, InvalidParameterException, ClientNotFoundException {
-
-		ClientDAO mockClientDao = mock(ClientDAO.class);
-
-		when(mockClientDao.getClientById(eq(5))).thenReturn(new Client(5, "Jean", "Steph", "717-789-4594", 34));
-
-		ClientService clientService = new ClientService(mockClientDao);
-
-		// ACT
-		Client actual = clientService.getClientById("5");
-
-		// ASSERT
-		Assertions.assertEquals(new Client(5, "Jean", "Steph", "717-789-4594", 34), actual);
-
+	@When("I click the add button")
+	public void i_click_the_add_button() {
+	    WebElement addButton = driver.findElement(By.xpath("//button[text()='Add Numbers']"));
+	    
+	    addButton.click();
 	}
 
-	// Negative Test
-	@Test
-	public void testGetClientByIdNotFoundNegative()
-			throws SQLException, InvalidParameterException, ClientNotFoundException {
-
-		ClientDAO mockClientDao = mock(ClientDAO.class);
-
-		ClientService clientService = new ClientService(mockClientDao);
-
-		// ACT and ASSERT
-		Assertions.assertThrows(ClientNotFoundException.class, () -> {
-			clientService.getClientById("1");
-		});
+	// Yesterday we had notes on Cucumber parameterization
+	// {double} is an example of an "inline" parameter
+	// These parameters correspond to values defined in the feature file (arguments)
+	@Then("I should see an addition result of {double}")
+	public void i_should_see_a_result_of(Double double1) {
+		driver.switchTo().frame("addResult"); // Switch into the inside of the iframe
+		WebElement addOutput = driver.findElement(By.tagName("pre"));
+		
+		String actual = addOutput.getText();
+		
+		Assertions.assertEquals("" + double1, actual);
+		
+		driver.quit();
+	}
+	
+	@Then("I should see an error message in the addition output area of {string}")
+	public void i_should_see_an_error_message_in_the_addition_output_area_of(String string) {
+	    driver.switchTo().frame("addResult");
+	    WebElement addOutput = driver.findElement(By.tagName("pre"));
+	    
+	    String actual = addOutput.getText();
+	    
+	    Assertions.assertEquals(string, actual);
+	    
+	    driver.quit();
+	}
+	
+	@When("I type in the number {double} into the left subtract input")
+	public void i_type_in_the_number_into_the_left_subtract_input(Double double1) {
+		 WebElement leftSubInput = driver.findElement(By.xpath("//form[@target='subResult']/input[@name='number1']"));
+		    
+		 leftSubInput.sendKeys("" + double1); // "" + double1 -> convert to a string
 	}
 
-	// Negative Test
-	@Test
-	public void testGetClientByIdAlphabeticalIdNegative() {
-
-		ClientDAO mockClientDao = mock(ClientDAO.class);
-
-		ClientService clientService = new ClientService(mockClientDao);
-
-		// ACT and ASSERT
-		Assertions.assertThrows(InvalidParameterException.class, () -> {
-			clientService.getClientById("abc");
-		});
+	@When("I type in the number {double} into the right subtract input")
+	public void i_type_in_the_number_into_the_right_subtract_input(Double double1) {
+		WebElement rightSubInput = driver.findElement(By.xpath("//form[@target='subResult']/input[@name='number2']"));
+	    
+		 rightSubInput.sendKeys("" + double1); // "" + double1 -> convert to a string
 	}
 
-	@Test
-	// Negative Test
-	public void testClientByIdDecimalIdNegative() throws SQLException, InvalidParameterException, ClientNotFoundException {
-
-		ClientDAO mockClientDao = mock(ClientDAO.class);
-
-		ClientService clientService = new ClientService(mockClientDao);
-
-		// ACT and ASSERT
-		Assertions.assertThrows(InvalidParameterException.class, () -> {
-			clientService.getClientById("1.0");
-		});
-
+	@When("I click the subtract button")
+	public void i_click_the_subtract_button() {
+		WebElement subButton = driver.findElement(By.xpath("//button[text()='Subtract Numbers']"));
+	    
+	    subButton.click();
 	}
-	//Positive test for editing firstname
-	@Test
-	public void testEditFirstNameOfClientPositive() throws SQLException, InvalidParameterException, ClientNotFoundException{
-		
-		ClientDAO mockClientDao = mock(ClientDAO.class);
-		
-		when(mockClientDao.getClientById(eq(5))).thenReturn(new Client(5, "Patrcik", "Smith", "717-451-7852", 45));
-		
-		AddOrUpdateClientDTO dto = new AddOrUpdateClientDTO("Gregory", "Smith", "717-451-7852", 45);
-		
-		when(mockClientDao.updateClient(eq(5), eq(dto))).thenReturn(new Client(5, "Gregory", "Smith", "717-451-7852", 45));
-		
-		ClientService clientService = new ClientService(mockClientDao);
-		
-		//ACT
-		
-		Client actual = clientService.editFirstNameOfClient("5", "Gregory");
-		
-		//ASSERT
-		Client expected = new Client(5,"Gregory", "Smith", "717-451-7852", 45);
-		
-		
-		Assertions.assertEquals(expected, actual);
+
+	@Then("I should see an subtraction result of {double}")
+	public void i_should_see_an_subtraction_result_of(Double double1) {
+	    driver.switchTo().frame("subResult");
+	    WebElement addOutput = driver.findElement(By.tagName("pre"));
+	    
+	    String actual = addOutput.getText();
+	    
+	    Assertions.assertEquals("" + double1, actual);
+	    
+	    driver.quit();
 	}
+	
+	@Then("I should see an error message in the subtraction output area of {string}")
+	public void i_should_see_an_error_message_in_the_subtraction_output_area_of(String string) {
+		driver.switchTo().frame("subResult");
+	    WebElement addOutput = driver.findElement(By.tagName("pre"));
+	    
+	    String actual = addOutput.getText();
+	    
+	    Assertions.assertEquals(string, actual);
+	    
+	    driver.quit();
+	}
+	
+	
+	
+	
+Scenario: Only left input missing (negative test)
+	Given I am at the calculator page
+	When I type in the number 34.3 into the right add input
+	And I click the add button
+	Then I should see an error message in the addition output area of "Left input is missing"
+
+Scenario: Only right input missing (negative test)
+	Given I am at the calculator page
+	When I type in the number 7.5 into the left add input
+	And I click the add button
+	Then I should see an error message in the addition output area of "Right input is missing"
+	
+Scenario: Both inputs missing (negative test)
+	Given I am at the calculator page
+	And I click the add button
+	Then I should see an error message in the addition output area of "Both inputs are missing"
+	
 	
 	//
 	
-	//Negative test edit Phone number
-	@Test
-	public void testEditPhoneNumberOfClientButClientWithId8DoesNotExist() {
-		
-		ClientDAO mockClientDao = mock(ClientDAO.class);
-		
-		ClientService clientService = new ClientService(mockClientDao);
-		
-		//ACT and ASSERT
-		
-		Assertions.assertThrows(ClientNotFoundException.class, () -> {
-			
-			clientService.editPhoneNumberOfClient("8","800-245-4175");
-		});
-	}
 	
 	
 	
-	//Negative test for editing last name
-	@Test
-	public void testEditLastNameOfClientButClientWithId11DoesNotExist() {
-		
-		ClientDAO mockClientDao = mock(ClientDAO.class);
-		
-		ClientService clientService = new ClientService(mockClientDao);
-		
-		//ACT and ASSERT
-		
-		Assertions.assertThrows(ClientNotFoundException.class, () ->  {
-			
-			clientService.editLastNameOfClient("11", "Bob");
-		});
-	}
 	
 	
-	//NEGATIVE TEST FOR EDIT FIRSTNAME
-	@Test
-	public void testEditFirstNameOfClientButClientWithId5DoesNotExist() {
-		
-		ClientDAO mockClientDao = mock(ClientDAO.class);
-		
-		ClientService clientService = new ClientService(mockClientDao);
-		
-		//ACT and ASSERT
-		
-		Assertions.assertThrows(ClientNotFoundException.class, () -> {
-			
-			clientService.editFirstNameOfClient("5", "George");
-			
-		});
-		
-	}
-	//Negative Test - InvalidParameterException thrown
 	
-	@Test
-	public void testEditFirstNameButIdProvidedIsNotAnInt() {
-		
-		ClientDAO mockClientDao = mock(ClientDAO.class);
-		
-		ClientService clientService = new ClientService(mockClientDao);
-		
-		//ACT and ASSERT
-		
-		Assertions.assertThrows(InvalidParameterException.class, () -> {
-			
-			clientService.editFirstNameOfClient("sfssdfbs", "George");
-			
-		});
-	}
-	//Positive test for Adding client
 	
-	@Test
-	public void testAddClientAllInformationCorrectInDTO() throws SQLException, InvalidParameterException, ClientNotFoundException {
-		
-		ClientDAO clientDao = mock(ClientDAO.class);
-		
-		AddOrUpdateClientDTO dtoIntoDao = new AddOrUpdateClientDTO("Steve","Stephen","717-852-1542",34);
-		
-		when(clientDao.addClient(eq(dtoIntoDao))).thenReturn(new Client(5,"Steve","Stephen","717-852-1542",34));
-		
-		ClientService clientService = new ClientService(clientDao);
-		
-		//ACT
-		AddOrUpdateClientDTO  dto = new AddOrUpdateClientDTO("Steve","Stephen","717-852-1542",34);
-		Client actual = clientService.addClient(dto);
-		
-		//ASSERT
-		Client expected = new Client(5,"Steve","Stephen","717-852-1542",34);
-		Assertions.assertEquals(expected, actual);
-		
-	}
-	/*********
-	 * NEGATIVE test
-	 * Scenario: Everything is correct except the firstName was left blank
-	 */
-	@Test
-	public void testAddClientFirstNameBlankEverythingElseValid() throws SQLException, InvalidParameterException, ClientNotFoundException {
-		
-		ClientDAO clientDao = mock(ClientDAO.class);
-		
-		ClientService clientService = new ClientService(clientDao);
-		
-		//ACT AD ASSERT
-		AddOrUpdateClientDTO  dto = new AddOrUpdateClientDTO(" ","Stephen","717-852-1542",34);
-		
-		Assertions.assertThrows(InvalidParameterException.class, () -> {
-			
-			clientService.addClient(dto);
-			
-		});
-		
-	}
-	/***************
-	 * NEGATIVE TEST
-	 * Scenario: Everything is correct except the lastName was left blank
-	 */
-	@Test
-	public void testAddStudentLasstNameBlankEverythingElseValid() throws SQLException, InvalidParameterException, ClientNotFoundException {
-		
-		ClientDAO clientDao = mock(ClientDAO.class);
-		
-		ClientService clientService = new ClientService(clientDao);
-		
-		//ACT AD ASSERT
-		AddOrUpdateClientDTO  dto = new AddOrUpdateClientDTO("Steve","   ","717-852-1542",34);
-		
-		Assertions.assertThrows(InvalidParameterException.class, () -> {
-			
-			clientService.addClient(dto);
-			
-		});
-	}
 	
-	/***************
-	 * NEGATIVE TEST
-	 * Scenario: Everything is correct except the phone Number was left blank
-	 */
-	@Test
-	public void testAddStudentPhoneNumberBlankEverythingElseValid() throws SQLException, InvalidParameterException, ClientNotFoundException {
-		
-		ClientDAO clientDao = mock(ClientDAO.class);
-		
-		ClientService clientService = new ClientService(clientDao);
-		
-		//ACT AD ASSERT
-		AddOrUpdateClientDTO  dto = new AddOrUpdateClientDTO("Steve","Bob","     ",34);
-		
-		Assertions.assertThrows(InvalidParameterException.class, () -> {
-			
-			clientService.addClient(dto);
-			
-		});
-	}
 	
-	/***************
-	 * NEGATIVE TEST
-	 * Scenario: Everything is correct except the Age is negative
-	 */
-	@Test
-	public void testAddStudentAgeBlankEverythingElseValid() throws SQLException, InvalidParameterException, ClientNotFoundException {
-		
-		ClientDAO clientDao = mock(ClientDAO.class);
-		
-		ClientService clientService = new ClientService(clientDao);
-		
-		//ACT AD ASSERT
-		AddOrUpdateClientDTO  dto = new AddOrUpdateClientDTO("Steve","Bob","717-245-5698", -12 );
-		
-		Assertions.assertThrows(InvalidParameterException.class, () -> {
-			
-			clientService.addClient(dto);
-			
-		});
-	}
 	
-	/***************
-	 * NEGATIVE TEST
-	 * Scenario: Everything is correct except both firstName and last name left blank
-	 */
-	@Test
-	public void testAddStudentFirstNameAndLastNameBlankEverythingElseValid() throws SQLException, InvalidParameterException, ClientNotFoundException {
-		
-		ClientDAO clientDao = mock(ClientDAO.class);
-		
-		ClientService clientService = new ClientService(clientDao);
-		
-		//ACT AD ASSERT
-		AddOrUpdateClientDTO  dto = new AddOrUpdateClientDTO("   ","   ","717-245-5698",0 );
-		
-		Assertions.assertThrows(InvalidParameterException.class, () -> {
-			
-			clientService.addClient(dto);
-			
-		});
-	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 
-//Positive Test for editing Phone number
-	@Test
-	public void testEditPhoneNumberOfClient() throws SQLException, InvalidParameterException, ClientNotFoundException {
-		
-		ClientDAO mockClientDao = mock(ClientDAO.class);
-		
-		when(mockClientDao.getClientById(eq(8))).thenReturn(new Client(8, "Suzan", "Barb", "717-124-9875", 23));
-		
-		AddOrUpdateClientDTO dto = new AddOrUpdateClientDTO("Suzan", "Barb", "800-245-4175",23);
-		
-		when(mockClientDao.updateClient(eq(8), eq(dto))).thenReturn(new Client(8, "Suzan", "Barb", "800-245-4175",23));
-		
-		ClientService clientService = new ClientService(mockClientDao);
-		
-		//ACT
-		Client actual = clientService.editPhoneNumberOfClient("8", "800-245-4175");
-		
-		//ASSERT
-		Client expected = new Client(8, "Suzan", "Barb", "800-245-4175",23);
-		
-		Assertions.assertEquals(expected, actual);
-	}
+
 	
-	//Positive test for editing LastName
-	@Test
-	public void testEditLastNameOfClientPositive() throws SQLException, InvalidParameterException, ClientNotFoundException {
-		
-		ClientDAO mockClientDao = mock(ClientDAO.class);
-		
-		when(mockClientDao.getClientById(eq(11))).thenReturn(new Client(11, "Steve", "Klem", "800-458-4512", 42));
-		
-		AddOrUpdateClientDTO dto = new AddOrUpdateClientDTO("Steve", "Bob", "800-458-4512", 42);
-		
-		when(mockClientDao.updateClient(eq(11), eq(dto))).thenReturn(new Client(11, "Steve", "Bob", "800-458-4512", 42));
-		
-		ClientService clientService = new ClientService(mockClientDao);
-		
-		//ACT
-		Client actual = clientService.editLastNameOfClient("11", "Bob");
-		
-		//ASSERT
-		Client expected = new Client(11, "Steve", "Bob", "800-458-4512", 42);
-		
-		Assertions.assertEquals(expected, actual);
-		
-	} 
+	

@@ -11,52 +11,52 @@ import com.revature.service.UserService;
 import io.javalin.Javalin;
 import io.javalin.http.Handler;
 
-public class UserController implements Controller{
+public class UserController implements Controller {
 
 	private AuthorizationService authorizationService;
-	
+
 	private UserService userService;
 	
 	
+
 	public UserController() {
 		this.authorizationService = new AuthorizationService();
+		this.userService = new UserService();
 	}
-	
+
 	/***
-	 * This is a protected endpoint that can only be accessed when  long as either regular or admin
+	 * This is a protected endpoint that can only be accessed when long as either
+	 * regular or admin
 	 */
 	private Handler getUserById = (ctx) -> {
 		User user = (User) ctx.req.getSession().getAttribute("currentuser");
-		//Authorizing either admin or regular
+		// Authorizing either admin or regular
 		this.authorizationService.authorizeRegularAndManager(user);
-		
+
 		String id = ctx.pathParam("userId");
-		
-		//TO DO
+
+		// TO DO
 	};
-	
-	//Protected endpoint that can only be accessed when logged in as admin
+
+	// Protected endpoint that can only be accessed when logged in as admin
 	private Handler addUser = (ctx) -> {
-		AddOrUpdateUsersDTO dto = ctx.bodyAsClass(AddOrUpdateUsersDTO.class);		
-		User user = (User) ctx.req.getSession().getAttribute("currentuser");
-		
-				
-		this.authorizationService.authorizeManager(user);;
-	 
-	 if(user.getUserRole().equals("manager")) {
-		 this.userService.addUser(dto);
-			
-			ctx.json(user);
-			ctx.status(404);
-	 }	 
-		
-		
+		User currentlyLoggedInUser = (User) ctx.req.getSession().getAttribute("currentuser");
+		this.authorizationService.authorizeManager(currentlyLoggedInUser);
+
+		AddOrUpdateUsersDTO dto = ctx.bodyAsClass(AddOrUpdateUsersDTO.class);
+
+		if (currentlyLoggedInUser.getUserRole().equals("manager")) {
+			User addedUser = this.userService.addUser(dto);
+			ctx.json(addedUser);
+			ctx.status(201);
+		}
+
 	};
-		
+
 	@Override
 	public void mapEndpoints(Javalin app) {
 		app.post("/user", addUser);
 		app.get("/user/{userId}", getUserById);
-	
+
 	}
 }

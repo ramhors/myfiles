@@ -30,7 +30,7 @@ public class UserService {
 
 	public User addUser(AddOrUpdateUsersDTO dto) throws InvalidParameterException,UsersNotFoundException, SQLException {
 		
-		//Check if the field is empty.
+	//	Check if the field is empty.
 		if(dto.getUserName().trim().equals("")) {
 			throw new InvalidParameterException("User name can not be empty");
 		}
@@ -64,6 +64,7 @@ public class UserService {
 		dto.setUserRole(dto.getUserRole().trim());
 		
 		User userInserted = this.userDao.addUsers(dto);
-		return userInserted;
+		return userInserted;		
+	
 	}
 }

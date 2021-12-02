@@ -38,9 +38,11 @@ public class UserDAO {
 
 			// This key will be for the first column
 			int generatedKeyId = rs.getInt(1);
-			return new User(generatedKeyId, user.getUserName(), user.getPassword(), user.getFirstName(),
-					user.getLastName(), user.getEmail(), user.getUserRole());
+			return new User(generatedKeyId, rs.getString("user_username"), rs.getString("user_password"), rs.getString("user_first_name"),
+					rs.getString("user_last_name"), rs.getString("user_email"), rs.getString("user_role"));
 
+		}catch(SQLException e) {
+			throw new SQLException("The value is not found");
 		}
 	}
 
