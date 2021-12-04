@@ -1,12 +1,12 @@
 #homepage-grid {
+	padding-left: 20px;
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 1fr 1/5fr;
 	grid-template-rows: 1fr 1fr;
-	gap: 0px 0px;
+
 	grid-template-areas:
-		"nav nav nav"
-		"reimbursement-display reimbursement-display submit-form"
-		"reimbursement-display reimbursement-display submit-form";
+		" reimbursement-display submit-form"
+		" reimbursement-display submit-form";
 }
 
 #reimbursements {
@@ -15,12 +15,26 @@
 
 #reimbursement-submit-form {
 	grid-area: submit-form;
+	margin-left: 30px;
+	margin-top: 40px;
 }
 
 #reimbursement-submit-form div {
-	margin-top: 30px;
+	margin-top: 10px;
 }
 
-nav {
-	grid-area: nav;
+body {
+	height: 1200px;
+}
+
+.submit-btn {
+	margin-bottom: 20px;
+}
+
+h1 {
+	align-content: center;
+}
+.logout {
+	justify-self: right;
+	position: relative;
 }

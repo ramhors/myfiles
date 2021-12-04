@@ -11,58 +11,70 @@
 			href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
 		/>
 	</head>
-	<body>
+	<body >
 		<div id="receipt-image-modal" class="modal">
 			<div class="modal-background"></div>
 			<div class="modal-content"></div>
 			<button class="modal-close is-large" aria-label="close"></button>
 		</div>
 
-		<div id="homepage-grid">
-			<nav>
-				<h1>Welcome to the Associate homepage</h1>
-				<button id="logout">Logout</button>
-			</nav>
+		<nav>
+			<h1 class="has-text-centered is-size-2 has-text-link"> Welcome to the Associate homepage</h1>
+			<div style="position: relative;">
+			<button id="logout" class="logout">Logout</button>
+		</div>
+		</nav>
 
+		<div id="homepage-grid">
 			<div id="reimbursements">
-				<h2>Reimbursement</h2>
-				<table id="reimbursement-table">
-					<thead>
-						<tr>
-							<th>id</th>
-							<th>assignment name</th>
-							<th>grade</th>
-							<th>grader id</th>
-							<th>author id</th>
-						</tr>
-					</thead>
-					<tbody></tbody>
-				</table>
+				<h2 class="is-size-3">Reimbursement</h2>
+				<div class="table-container">
+					<table class="table" is-striped id="reimbursement-table">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Amount</th>
+								<th>Submitted Date</th>
+								<th>Resolved Date</th>
+								<th>Status</th>
+								<th>Type</th>
+								<th>Description</th>
+								<th>Resolver_Id</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
 			</div>
 
-			<div id="reimbursement-submit-form">
+			<div class="submit-form" id="reimbursement-submit-form">
 				<h2>Submit New Reimbursement</h2>
 
 				<div>
 					<label for="reimbursement-type">Type:</label>
 					<input type="text" id="reimbursement-type" />
-					</div>
-					<label for="reimbursement-amount">Amount </label>
-					<input type="text" id="reimbursement-amount" />
 				</div>
-
 				<div>
-					<label for="reimbursement-file"
-						>Receipt Upload (JPEG, PNG, or GIF)</label
-					>
-					<input type="file" id="reimbursement-file" />
-				</div>
+				<label for="reimbursement-amount">Amount </label>
+				<input type="text" id="reimbursement-amount" />
+			</div>
+			  <div>
+					<label for="description">Description</label>
+				<input type="text" id="description" />
+			</div>
 
-				<div>
-					<button id="submit-reimbursement-btn">Submit Reimbursement</button>
-				</div>
+			<div>
+				<label for="reimbursement-file"
+					>Receipt Upload (JPEG, PNG, or GIF)</label
+				>
+				<input class = "submit-btn" type="file" id="reimbursement-file" />
+			</div>
+
+			<div>
+				<button id="submit-reimbursement-btn">Submit Reimbursement</button>
 			</div>
 		</div>
+
 		<script src="associate-homepage.js"></script>
 	</body>
 </html>
