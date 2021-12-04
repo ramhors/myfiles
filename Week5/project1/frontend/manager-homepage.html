@@ -4,9 +4,90 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Financial Management Homepage</title>
+		<title>Financial Manager Homepage</title>
+		<link rel="stylesheet" href="manager.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+		/>
 	</head>
 	<body>
-		<h1>Management Homepage</h1>
+		<div id="receipt-image-modal" class="modal">
+			<div class="modal-background"></div>
+			<div class="modal-content"></div>
+			<button class="modal-close is-large" aria-label="close"></button>
+		</div>
+
+		<div>
+			<h1
+				class="has-text-centered is-size-3 has-text-link has-background-warning"
+			>
+				Welcome to the financial manager homepage
+			</h1>
+			<div class="logoutbtn">
+				<button id="logout" class="logout">Logout</button>
+			</div>
+		</div>
+		<div id="homepage-grid">
+			<div id="reimbursements">
+				<h2 class="is-size-4 has-text-danger h2-header">Reimbursements</h2>
+				<div>
+					<label>Search</label>
+					<input class="filter" type="text" id="search" placeholder="search" />
+				</div>
+				<div class="table-container"></div>
+				<table class="table is-striped is-fullwidth" id="reimbursement-table">
+					<thead class="has-background-primary">
+						<tr>
+							<th>Id</th>
+							<th>Amount</th>
+							<th>Submitted Date</th>
+							<th>Resolved Date</th>
+							<th>Status</th>
+							<th>Type</th>
+							<th>Description</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+
+			<div class="submit-form" id="user-submit-form">
+				<h2 class="is-size-5 has-text-link h2-insert-text">
+					Insert new associate
+				</h2>
+
+				<div>
+					<label for="username">Username:</label>
+					<input type="text" id="username" />
+				</div>
+				<div>
+					<label for="password">Password: </label>
+					<input type="text" id="password" />
+				</div>
+				<div>
+					<label for="firstname">First Name:</label>
+					<input type="text" id="first-name" />
+				</div>
+				<div>
+					<label for="lastname">Last Name:</label>
+					<input type="text" id="last-name" />
+				</div>
+				<div>
+					<label for="email">Email:</label>
+					<input type="text" id="email" />
+				</div>
+				<div>
+					<label for="user-role">Role:</label>
+					<input type="text" id="role" />
+				</div>
+
+				<div>
+					<button id="insert-user">Add user</button>
+				</div>
+			</div>
+		</div>
+		<script src="manager-homepage.js"></script>
 	</body>
 </html>

@@ -4,14 +4,14 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
+		<title>Associate Home page</title>
 		<link rel="stylesheet" href="associate.css" />
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
 		/>
 	</head>
-	<body >
+	<body>
 		<div id="receipt-image-modal" class="modal">
 			<div class="modal-background"></div>
 			<div class="modal-content"></div>
@@ -19,18 +19,22 @@
 		</div>
 
 		<nav>
-			<h1 class="has-text-centered is-size-2 has-text-link"> Welcome to the Associate homepage</h1>
-			<div style="position: relative;">
-			<button id="logout" class="logout">Logout</button>
-		</div>
+			<h1
+				class="has-text-centered is-size-3 has-text-link has-background-warning"
+			>
+				Welcome to the Associate homepage
+			</h1>
+			<div style="position: relative">
+				<button id="logout" class="logout">Logout</button>
+			</div>
 		</nav>
 
 		<div id="homepage-grid">
 			<div id="reimbursements">
-				<h2 class="is-size-3">Reimbursement</h2>
+				<h2 class="is-size-4 h2-header has-text-danger">Reimbursements</h2>
 				<div class="table-container">
-					<table class="table" is-striped id="reimbursement-table">
-						<thead>
+					<table class="table is-striped is-fullwidth" id="reimbursement-table">
+						<thead class="has-background-primary">
 							<tr>
 								<th>Id</th>
 								<th>Amount</th>
@@ -48,30 +52,30 @@
 			</div>
 
 			<div class="submit-form" id="reimbursement-submit-form">
-				<h2>Submit New Reimbursement</h2>
+				<h2 class="is-size-5 has-text-link">Submit New Reimbursement</h2>
 
 				<div>
 					<label for="reimbursement-type">Type:</label>
 					<input type="text" id="reimbursement-type" />
 				</div>
 				<div>
-				<label for="reimbursement-amount">Amount </label>
-				<input type="text" id="reimbursement-amount" />
-			</div>
-			  <div>
+					<label for="reimbursement-amount">Amount </label>
+					<input type="text" id="reimbursement-amount" />
+				</div>
+				<div>
 					<label for="description">Description</label>
-				<input type="text" id="description" />
-			</div>
+					<input type="text" id="description" />
+				</div>
+				<div>
+					<label for="reimbursement-file"
+						>Receipt Upload (JPEG, PNG, or GIF)</label
+					>
+					<input class="submit-btn" type="file" id="reimbursement-file" />
+				</div>
 
-			<div>
-				<label for="reimbursement-file"
-					>Receipt Upload (JPEG, PNG, or GIF)</label
-				>
-				<input class = "submit-btn" type="file" id="reimbursement-file" />
-			</div>
-
-			<div>
-				<button id="submit-reimbursement-btn">Submit Reimbursement</button>
+				<div>
+					<button id="submit-reimbursement-btn">Submit Reimbursement</button>
+				</div>
 			</div>
 		</div>
 

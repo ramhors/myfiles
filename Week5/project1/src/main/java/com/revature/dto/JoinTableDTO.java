@@ -14,7 +14,7 @@ public class JoinTableDTO {
 	
 	JoinTableDTO(){}
 
-	public JoinTableDTO(int id, double amount, String date, String status, int resolver, String firstName,
+	public JoinTableDTO(int id, double amount, String status, int resolver, String firstName,
 			String lastName) {
 		super();
 		this.id = id;

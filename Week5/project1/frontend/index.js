@@ -13,7 +13,7 @@ window.addEventListener("load", async () => {
 
 		if (userObj.userRole === "employee") {
 			//If it's employee, send to this location below
-			window.location.href = "employees-homepage.html";
+			window.location.href = "associate-homepage.html";
 		} else if (userObj.userRole === "manager") {
 			window.location.href = "manager-homepage.html";
 		}
@@ -65,7 +65,7 @@ async function login() {
 			console.log(data.userRole);
 			if (data.userRole === "employee") {
 				//then redirect to employee homepage
-				window.location.href = "employees-homepage.html";
+				window.location.href = "associate-homepage.html";
 			} else if (data.userRole === "manager") {
 				window.location.href = "manager-homepage.html";
 			}

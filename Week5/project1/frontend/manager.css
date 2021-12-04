@@ -1,8 +1,13 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
 #homepage-grid {
 	padding-left: 20px;
 	display: grid;
-	grid-template-columns: 1fr 1fr 1/5fr;
-	grid-template-rows: 1fr 1fr;
+	grid-template-columns: 1fr 1/6fr;
+	grid-template-rows: 1fr;
 
 	grid-template-areas:
 		" reimbursement-display reimbursement-display submit-form"
@@ -13,36 +18,25 @@
 	grid-area: reimbursement-display;
 }
 
-#reimbursement-submit-form {
+#user-submit-form {
 	grid-area: submit-form;
 	margin-left: 60px;
 	margin-top: 40px;
 }
 
-#reimbursement-submit-form div {
+#user-submit-form div {
 	margin-top: 10px;
 }
 
-body {
-	height: 1200px;
+.h2-header {
+	margin-top: 20px;
+	margin-bottom: 10px;
 }
 
-.submit-btn {
-	margin-bottom: 20px;
-}
-
-h1 {
-	align-content: center;
-}
-
-.logout {
-	justify-self: right;
-	position: relative;
-}
 button {
 	background-color: #428bca;
 	color: #ffff;
-	font-size: 15px;
+	font-size: 20px;
 }
 
 button:hover {
@@ -52,11 +46,15 @@ button:focus {
 	color: red;
 }
 
-.logout {
+h2 {
+	margin-bottom: 10px;
+}
+.logoutbtn {
 	margin-top: 10px;
 }
-
-.h2-header {
+.filter {
+	height: 25px;
+}
+.h2-insert-text {
 	margin-top: 20px;
-	margin-bottom: 10px;
 }
