@@ -30,7 +30,7 @@ public class UserService {
 
 	public User addUser(AddOrUpdateUsersDTO dto) throws InvalidParameterException,UsersNotFoundException, SQLException {
 		
-	//	Check if the field is empty.
+	
 		if(dto.getUserName().trim().equals("")) {
 			throw new InvalidParameterException("User name can not be empty");
 		}

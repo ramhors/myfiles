@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.dto.AddReimbursementDTO;
+import com.revature.dto.JoinTableDTO;
 import com.revature.exception.ReimbursementAlreadyResolvedException;
 import com.revature.exception.ReimbursementNotFound;
 import com.revature.model.Reimbursement;
@@ -121,6 +122,8 @@ public class ReimbursementDAO {
 			return new Reimbursement(generatedKeyId,amount,reimbursementType,description,authorId,rs.getString("reimb_date"));
 		}
 	}
+	
+	
 
 	public List<Reimbursement> getAllReimbursement() throws SQLException {
 		try (Connection conn = JDBCUtility.getConnection()) {

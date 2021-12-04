@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.revature.dao.ReimbursementDAO;
 import com.revature.dto.AddReimbursementDTO;
+import com.revature.dto.JoinTableDTO;
 import com.revature.exception.InvalidParameterException;
 import com.revature.exception.ReceiptNotFoundException;
 import com.revature.exception.ReimbursementAlreadyResolvedException;
@@ -58,34 +59,35 @@ public class ReimbursementService {
 		}
 	}
 
-	public Reimbursement updateWithReceipt(User currentlyLoggedInUser, String mimeType, String reimbursementId, InputStream content) throws InvalidParameterException, SQLException, ReimbursementNotFound {
+	public Reimbursement updateWithReceipt(User currentlyLoggedInUser, String mimeType, String reimbursementId,
+			InputStream content) throws InvalidParameterException, SQLException, ReimbursementNotFound {
 		try {
 			int id = Integer.parseInt(reimbursementId);
-			
+
 			Reimbursement reimbursement = this.reimbursementDao.getReimbursementByItsId(id);
-			
-			if(reimbursement == null) {
+
+			if (reimbursement == null) {
 				throw new ReimbursementNotFound("Reimbursement with id " + reimbursementId + " was not found");
 			}
-			if(reimbursement.getReceipt() == null) {
+			if (reimbursement.getReceipt() == null) {
 				this.reimbursementDao.updateWithReceipt(id, content);
 			}
-			
-		Set<String> allowedFileTypes = new HashSet<>();
-		allowedFileTypes.add("image/jpeg");
-		allowedFileTypes.add("image/png");
-		allowedFileTypes.add("image/gif");
-		
-		if(!allowedFileTypes.contains(mimeType)) {
-			throw new InvalidParameterException("Only PNG,JPEG or GIF are allowed");
+
+			Set<String> allowedFileTypes = new HashSet<>();
+			allowedFileTypes.add("image/jpeg");
+			allowedFileTypes.add("image/png");
+			allowedFileTypes.add("image/gif");
+
+			if (!allowedFileTypes.contains(mimeType)) {
+				throw new InvalidParameterException("Only PNG,JPEG or GIF are allowed");
+			}
+
+			return this.reimbursementDao.getReimbursementByItsId(id);
+
+		} catch (NumberFormatException e) {
+			throw new InvalidParameterException("Reimbursement id supplied must be an int");
 		}
-		
-		return this.reimbursementDao.getReimbursementByItsId(id);
-		
-	}catch(NumberFormatException e) {
-		throw new InvalidParameterException("Reimbursement id supplied must be an int");
-	}
-		
+
 	}
 
 	// checking if the mimetype is either image/jpg, image/png or image/gif
@@ -153,36 +155,37 @@ public class ReimbursementService {
 			throw new InvalidParameterException("Id provided is not an int");
 		}
 	}
-	
-	public InputStream getImageFromReimbursementById(User currentlyLoggedInUser,String reimbursementId) throws SQLException, UnauthorizedException,ReceiptNotFoundException, InvalidParameterException{
+
+	public InputStream getImageFromReimbursementById(User currentlyLoggedInUser, String reimbursementId)
+			throws SQLException, UnauthorizedException, ReceiptNotFoundException, InvalidParameterException {
 		try {
 			int id = Integer.parseInt(reimbursementId);
-			
-			if(currentlyLoggedInUser.getUserRole().equals("employee")) {
-			int employeeId = currentlyLoggedInUser.getUserId();
-			List<Reimbursement> reimbursementBelongToEmployee = this.reimbursementDao.getAllReimbursementByEmployee(employeeId);
-			
-			Set<Integer> reimbursementIdsEncoutered = new HashSet<>();
-			for (Reimbursement r : reimbursementBelongToEmployee) {
-				reimbursementIdsEncoutered.add(r.getReimbId());
+
+			if (currentlyLoggedInUser.getUserRole().equals("employee")) {
+				int employeeId = currentlyLoggedInUser.getUserId();
+				List<Reimbursement> reimbursementBelongToEmployee = this.reimbursementDao
+						.getAllReimbursementByEmployee(employeeId);
+
+				Set<Integer> reimbursementIdsEncoutered = new HashSet<>();
+				for (Reimbursement r : reimbursementBelongToEmployee) {
+					reimbursementIdsEncoutered.add(r.getReimbId());
+				}
+				if (!reimbursementIdsEncoutered.contains(id)) {
+					throw new UnauthorizedException("You can not access a receipt that does not belong to yourself");
+				}
 			}
-			if(!reimbursementIdsEncoutered.contains(id)) {
-				throw new UnauthorizedException("You can not access a receipt that does not belong to yourself");
+			// Grabbing the image
+			InputStream image = this.reimbursementDao.getReceiptFromReimbursementById(id);
+
+			if (image == null) {
+				throw new ReceiptNotFoundException("Receipt was not found for reimbursement id " + id);
 			}
+
+			return image;
+		} catch (NumberFormatException e) {
+			throw new InvalidParameterException("Reimbursement id supplied must be an int");
 		}
-		//Grabbing the image
-		InputStream image = this.reimbursementDao.getReceiptFromReimbursementById(id);
-		
-		if(image == null) {
-			throw new ReceiptNotFoundException("Receipt was not found for reimbursement id " + id);
-		}
-		
-		return image;
-	}catch(NumberFormatException e) {
-		throw new InvalidParameterException("Reimbursement id supplied must be an int");
+
 	}
-	
-	}
-	
 
 }

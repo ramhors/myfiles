@@ -59,7 +59,7 @@
 }
 body {
 	background-color: #ffe066;
-	width: 600fr;
+	justify-content: center;
 }
 h1 {
 	padding-top: 20px;
