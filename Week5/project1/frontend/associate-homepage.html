@@ -33,7 +33,10 @@
 			<div id="reimbursements">
 				<h2 class="is-size-4 h2-header has-text-danger">Reimbursements</h2>
 				<div class="table-container">
-					<table class="table is-striped is-fullwidth" id="reimbursement-table">
+					<table
+						class="table is-striped is-fullwidth is-hoverable"
+						id="reimbursement-table"
+					>
 						<thead class="has-background-primary">
 							<tr>
 								<th>Id</th>
@@ -41,9 +44,10 @@
 								<th>Submitted Date</th>
 								<th>Resolved Date</th>
 								<th>Status</th>
+								<th>Resolver_Id</th>
 								<th>Type</th>
 								<th>Description</th>
-								<th>Resolver_Id</th>
+								<th>AuthorId</th>
 							</tr>
 						</thead>
 						<tbody></tbody>
@@ -70,7 +74,7 @@
 					<label for="reimbursement-file"
 						>Receipt Upload (JPEG, PNG, or GIF)</label
 					>
-					<input class="submit-btn" type="file" id="reimbursement-file" />
+					<input class="submit-btn" type="file" id="reimbursement-image" />
 				</div>
 
 				<div>

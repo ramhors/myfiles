@@ -75,6 +75,7 @@ public class ReimbursementService {
 
 			Set<String> allowedFileTypes = new HashSet<>();
 			allowedFileTypes.add("image/jpeg");
+			allowedFileTypes.add("image/jpg");
 			allowedFileTypes.add("image/png");
 			allowedFileTypes.add("image/gif");
 
