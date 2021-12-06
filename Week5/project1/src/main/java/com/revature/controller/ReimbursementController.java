@@ -21,6 +21,7 @@ public class ReimbursementController implements Controller{
 
 	private AuthorizationService authService;
 	private ReimbursementService reimbursementService;
+	private Reimbursement reimbursements;
 	
 	public ReimbursementController() {
 		this.authService = new AuthorizationService();
@@ -49,6 +50,55 @@ public class ReimbursementController implements Controller{
 		ctx.json(reimbursement);
 		ctx.status(201);
 	};
+	
+	private Handler addReimbursement = (ctx) -> {
+		User currentLoggedInUser = (User) ctx.req.getSession().getAttribute("currentuser");
+		this.authService.authorizeRegularAndManager(currentLoggedInUser);
+		
+		String reimbursementType = ctx.formParam("type");
+		
+		String reimbursementAmount = ctx.formParam("amount");
+		
+		String reimbursementDescription = ctx.formParam("description");
+		
+		UploadedFile file = ctx.uploadedFile("receipt");
+		
+		if(file == null) {
+			ctx.status(400);
+			ctx.json(new MessageDTO("Must have an image to upload"));
+		return;
+		}
+		
+		if(reimbursementType == null) {
+			ctx.status(400);
+			ctx.json(new MessageDTO("Must enter reimbursement type"));
+		return;
+		}
+		
+		if(reimbursementAmount == null) {
+			ctx.status(400);
+			ctx.json(new MessageDTO("Must enter amount"));
+		return;
+		}
+		if(reimbursementDescription == null) {
+			ctx.status(400);
+			ctx.json(new MessageDTO("Must enter amount"));
+		return;
+		}
+		
+		InputStream contents = file.getContent();
+		
+		Tika tika = new Tika();
+		String mimeType = tika.detect(contents);
+		
+		this.reimbursementService.addReimbursement(currentLoggedInUser, reimbursementAmount, reimbursementDescription, mimeType,
+				reimbursementType,contents);
+		
+		ctx.json("Adding reimbursement is sucessful");
+		ctx.status(201);
+		
+	};
+	
 	
 	
 	private Handler getReimbursementById = (ctx) -> {
@@ -122,6 +172,7 @@ public class ReimbursementController implements Controller{
 		app.get("/reimbursements/{id}/image", getReceiptFromReimbursementById);
 		
 		app.post("/reimbursements", submitReimbursement);
+		app.post("/addreimbursement", addReimbursement);
 		
 		app.patch("/reimbursements/{id}/status", updateReimbursement);
 		app.patch("/reimbursements/{id}/image", updateWithReceipt);

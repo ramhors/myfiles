@@ -92,9 +92,12 @@ public class ReimbursementService {
 	}
 
 	// checking if the mimetype is either image/jpg, image/png or image/gif
-	public Reimbursement addReimbursement(User currentlyLoggedInUser, double amount, String description,
+	public Reimbursement addReimbursement(User currentlyLoggedInUser, String amount, String description,
 			String mimeType, String reimbursementType, InputStream content)
 			throws SQLException, InvalidParameterException {
+		
+		double submitAmount = Double.parseDouble(amount);
+		
 		Set<String> allowedFileTypes = new HashSet<>();
 		allowedFileTypes.add("image/jpeg");
 		allowedFileTypes.add("image/jpg");
@@ -107,8 +110,8 @@ public class ReimbursementService {
 		// Whoever is logged in will be the actual author of the reimbursement
 		int authorId = currentlyLoggedInUser.getUserId();
 
-		Reimbursement addedReimbursement = this.reimbursementDao.addReimbursement(amount, reimbursementType,
-				description, authorId, content);
+		Reimbursement addedReimbursement = this.reimbursementDao.addReimbursement(description, reimbursementType,
+				submitAmount, authorId, content);
 
 		return addedReimbursement;
 	}

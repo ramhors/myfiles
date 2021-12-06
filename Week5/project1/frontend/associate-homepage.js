@@ -100,7 +100,7 @@ async function populateTableWithReimbursement() {
 			let imageElement = document.createElement("img");
 			imageElement.setAttribute(
 				"src",
-				"http://localhost:8080/reimbursements/reimbursements.reimb_id/image"
+				"http://localhost:8080/reimbursements/${reimbursement.reimb_id}/image"
 			);
 			modalContentElement.appendChild(imageElement);
 
@@ -129,9 +129,11 @@ reimbursementSubmitButton.addEventListener("click", submitReimbursement);
 
 async function submitReimbursement() {
 	console.log("submit was clicked");
+
 	let reimbursementTypeInput = document.querySelector("#reimbursement-type");
 	let reimbursementAmountInput = document.querySelector("reimbursement-amount");
 	let reimbursementDescriptionInput = document.querySelector("description");
+
 	let reimbursementImageInput = document.querySelector("#reimbursement-image");
 
 	const file = reimbursementImageInput.file[0];
@@ -141,14 +143,28 @@ async function submitReimbursement() {
 	formData.append("amount", reimbursementAmountInput.value);
 	formData.append("description", reimbursementDescriptionInput.value);
 
+	formData.append("receipt", file);
+
 	let res = await fetch("http://localhost:8080/reimbursements", {
 		method: "POST",
 		credentials: "include",
 		body: formData,
 	});
 
+	let data = await res.text();
 	if (res.status === 201) {
-		populateTableWithReimbursement(); //Refreshing the table if it's successful
+		let successfulSubmit = document.createElement("p");
+		let submitDiv = document.querySelector("#submit-info");
+
+		successfulSubmit.innerHTML = data;
+
+		successfulSubmit.style.color = "blue";
+
+		submitDiv.appendChild(successfulSubmit);
+
+		setTimeout(() => window.location.reload(), 1000);
+
+		//populateTableWithReimbursement(); //Refreshing the table if it's successful
 	} else if (res.status === 400) {
 		let reimbursementForm = document.querySelector("reimbursement-submit-form");
 

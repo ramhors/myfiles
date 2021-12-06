@@ -89,7 +89,7 @@ public class ReimbursementDAO {
 		}
 	}
 	
-	public Reimbursement addReimbursement(double amount,String reimbursementType, String description, int authorId, InputStream image) throws SQLException {
+	public Reimbursement addReimbursement(String reimbursementType,String description, double amount,  int authorId, InputStream image) throws SQLException {
 		
 			try (Connection conn = JDBCUtility.getConnection()) {
 			Reimbursement reimbursement = new Reimbursement();

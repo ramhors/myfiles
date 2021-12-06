@@ -6,8 +6,8 @@
 #homepage-grid {
 	padding-left: 20px;
 	display: grid;
-	grid-template-columns: 1fr 1/6fr;
-	grid-template-rows: 1fr;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr 1fr;
 
 	grid-template-areas:
 		" reimbursement-display reimbursement-display submit-form"
