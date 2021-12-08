@@ -31,8 +31,19 @@
 
 		<div id="homepage-grid">
 			<div id="reimbursements">
-				<h2 class="is-size-4 h2-header has-text-danger">Reimbursements</h2>
+				<h2 class="is-size-4 h2-header has-text-info-dark">Reimbursements</h2>
 				<div class="table-container">
+					<div>
+						<label>Search</label>
+						<div class="search-table-container">
+							<input
+								class="filter"
+								type="text"
+								id="myInput"
+								onkeyup="searchTable()"
+								placeholder="search"
+							/>
+						</div>
 					<table
 						class="table is-striped is-fullwidth is-hoverable"
 						id="reimbursement-table"
@@ -82,6 +93,29 @@
 				</div>
 			</div>
 		</div>
+		<script>
+			function searchTable() {
+				var input, filter, found, table, tr, td, i, j;
+				input = document.getElementById("myInput");
+				filter = input.value.toUpperCase();
+				table = document.getElementById("reimbursement-table");
+				tr = table.getElementsByTagName("tr");
+				for (i = 0; i < tr.length; i++) {
+					td = tr[i].getElementsByTagName("td");
+					for (j = 0; j < td.length; j++) {
+						if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+							found = true;
+						}
+					}
+					if (found) {
+						tr[i].style.display = "";
+						found = false;
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		</script>
 
 		<script src="associate-homepage.js"></script>
 	</body>

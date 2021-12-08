@@ -4,13 +4,7 @@ window.addEventListener("load", async () => {
 		method: "GET",
 	});
 
-	if (res.status === 200) {
-		let userObj = await res.json();
-
-		if (userObj.userRole === "employee") {
-			window.location.href = "associate-homepage.html";
-		}
-	} else if (res.status === 401) {
+	if (res.status === 401) {
 		window.location.href = "index.html";
 	}
 
@@ -61,16 +55,13 @@ async function populateTableWithReimbursement() {
 		let td11 = document.createElement("td");
 		let td12 = document.createElement("td");
 
-		// let td7 = document.createElement("td");
-		// let td8 = document.createElement("td");
-
 		let viewImageButton = document.createElement("button");
 		viewImageButton.innerHTML = "View Image";
 		td12.appendChild(viewImageButton);
 
 		viewImageButton.addEventListener("click", () => {
 			let reimbursementImageModal = document.querySelector(
-				"receipt-image-modal"
+				"#receipt-image-modal"
 			);
 			//Close button
 			let modalCloseElement = reimbursementImageModal.querySelector("button");
@@ -84,8 +75,8 @@ async function populateTableWithReimbursement() {
 
 			let imageElement = document.createElement("img");
 			imageElement.setAttribute(
-				"src",
-				"http://localhost:8080/reimbursements/${reimbursement.reimb_id}/image"
+				`src`,
+				`http://localhost:8080/reimbursements/${reimbursement.reimbId}/image`
 			);
 			modalContentElement.appendChild(imageElement);
 
@@ -100,13 +91,13 @@ async function populateTableWithReimbursement() {
 			td6.innerHTML = "-";
 
 			let statusInput = document.createElement("input");
-			statusInput.setAttribute("type", "string");
+			statusInput.setAttribute("type", "text");
 
 			let statusButton = document.createElement("button");
 			statusButton.innerText = "Approve Me";
 			statusButton.addEventListener("click", async () => {
 				let res = await fetch(
-					"http://localhost:8080/reimbursements/${reimbursement.reimb-id}/status",
+					`http://localhost:8080/reimbursements/${reimbursement.reimbId}/status`,
 					{
 						credentials: "include",
 						method: "PATCH",

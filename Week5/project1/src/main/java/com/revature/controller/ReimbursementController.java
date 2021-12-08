@@ -43,10 +43,11 @@ public class ReimbursementController implements Controller{
 		User currentlyLoggedInUser = (User) ctx.req.getSession().getAttribute("currentuser");
 		this.authService.authorizeRegularAndManager(currentlyLoggedInUser);
 		
-		AddReimbursementDTO dto = ctx.bodyAsClass(AddReimbursementDTO.class);
+		//AddReimbursementDTO dto = ctx.bodyAsClass(AddReimbursementDTO.class);
+		Reimbursement reimbursements = ctx.bodyAsClass(Reimbursement.class);
 		
-		Reimbursement reimbursement = this.reimbursementService.submitReimbursement(currentlyLoggedInUser, dto);
-		
+		Reimbursement reimbursement = this.reimbursementService.submitReimbursement(currentlyLoggedInUser, reimbursements);
+				
 		ctx.json(reimbursement);
 		ctx.status(201);
 	};
@@ -91,9 +92,10 @@ public class ReimbursementController implements Controller{
 		Tika tika = new Tika();
 		String mimeType = tika.detect(contents);
 		
-		this.reimbursementService.addReimbursement(currentLoggedInUser, reimbursementAmount, reimbursementDescription, mimeType,
+		Reimbursement reimbursement = this.reimbursementService.addReimbursement(currentLoggedInUser, reimbursementAmount, reimbursementDescription, mimeType,
 				reimbursementType,contents);
 		
+		ctx.json("reimbursement");
 		ctx.json("Adding reimbursement is sucessful");
 		ctx.status(201);
 		
@@ -119,8 +121,7 @@ public class ReimbursementController implements Controller{
 		
 		String reimbursementId = ctx.pathParam("id");
 		
-		String status = ctx.formParam("status");
-		//UpdateStatusDTO dto = ctx.bodyAsClass(UpdateStatusDTO.class);
+		String status = ctx.formParam("status");		
 		
 		Reimbursement updateReimbursement = this.reimbursementService.updateReimbursement(currentlyLoggedInUser, reimbursementId,status);
 		
@@ -171,8 +172,9 @@ public class ReimbursementController implements Controller{
 		app.get("/reimbursements/{id}", getReimbursementById);		
 		app.get("/reimbursements/{id}/image", getReceiptFromReimbursementById);
 		
-		app.post("/reimbursements", submitReimbursement);
-		app.post("/addreimbursement", addReimbursement);
+	//	app.post("/reimbursements", submitReimbursement);
+	//	app.post("/reimbursements/amount/type/description", submitReimbursement);
+		app.post("/reimbursements", addReimbursement);
 		
 		app.patch("/reimbursements/{id}/status", updateReimbursement);
 		app.patch("/reimbursements/{id}/image", updateWithReceipt);

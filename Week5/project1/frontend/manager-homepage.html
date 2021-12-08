@@ -30,10 +30,18 @@
 		</div>
 		<div id="homepage-grid">
 			<div id="reimbursements">
-				<h2 class="is-size-4 has-text-danger h2-header">Reimbursements</h2>
+				<h2 class="is-size-4 has-text-info-dark h2-header">Reimbursements</h2>
 				<div>
 					<label>Search</label>
-					<input class="filter" type="text" id="search" placeholder="search" />
+					<div class="search-table-container">
+						<input
+							class="filter"
+							type="text"
+							id="myInput"
+							onkeyup="searchTable()"
+							placeholder="search"
+						/>
+					</div>
 				</div>
 				<div class="table-container"></div>
 				<table
@@ -57,42 +65,31 @@
 					<tbody></tbody>
 				</table>
 			</div>
-
-			<div class="submit-form" id="user-submit-form">
-				<h2 class="is-size-5 has-text-link h2-insert-text">
-					Insert new associate
-				</h2>
-
-				<div>
-					<label for="username">Username:</label>
-					<input type="text" id="username" />
-				</div>
-				<div>
-					<label for="password">Password: </label>
-					<input type="text" id="password" />
-				</div>
-				<div>
-					<label for="firstname">First Name:</label>
-					<input type="text" id="first-name" />
-				</div>
-				<div>
-					<label for="lastname">Last Name:</label>
-					<input type="text" id="last-name" />
-				</div>
-				<div>
-					<label for="email">Email:</label>
-					<input type="text" id="email" />
-				</div>
-				<div>
-					<label for="user-role">Role:</label>
-					<input type="text" id="role" />
-				</div>
-
-				<div>
-					<button id="insert-user">Add user</button>
-				</div>
-			</div>
 		</div>
+
+		<script>
+			function searchTable() {
+				var input, filter, found, table, tr, td, i, j;
+				input = document.getElementById("myInput");
+				filter = input.value.toUpperCase();
+				table = document.getElementById("reimbursement-table");
+				tr = table.getElementsByTagName("tr");
+				for (i = 0; i < tr.length; i++) {
+					td = tr[i].getElementsByTagName("td");
+					for (j = 0; j < td.length; j++) {
+						if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+							found = true;
+						}
+					}
+					if (found) {
+						tr[i].style.display = "";
+						found = false;
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		</script>
 		<script src="manager-homepage.js"></script>
 	</body>
 </html>

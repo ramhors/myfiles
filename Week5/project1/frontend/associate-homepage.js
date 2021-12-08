@@ -4,13 +4,7 @@ window.addEventListener("load", async () => {
 		method: "GET",
 	});
 
-	if (res.status === 200) {
-		let userObj = await res.json();
-
-		if (userObj.userRole === "manager") {
-			window.location.href = "manager-homepage.html";
-		}
-	} else if (res.status === 401) {
+	if (res.status === 401) {
 		window.location.href = "index.html";
 	}
 
@@ -85,7 +79,7 @@ async function populateTableWithReimbursement() {
 
 		viewImageButton.addEventListener("click", () => {
 			let reimbursementImageModal = document.querySelector(
-				"receipt-image-modal"
+				"#receipt-image-modal"
 			);
 			//Close button
 			let modalCloseElement = reimbursementImageModal.querySelector("button");
@@ -99,8 +93,8 @@ async function populateTableWithReimbursement() {
 
 			let imageElement = document.createElement("img");
 			imageElement.setAttribute(
-				"src",
-				"http://localhost:8080/reimbursements/${reimbursement.reimb_id}/image"
+				`src`,
+				`http://localhost:8080/reimbursements/${reimbursement.reimbId}/image`
 			);
 			modalContentElement.appendChild(imageElement);
 
@@ -131,12 +125,14 @@ async function submitReimbursement() {
 	console.log("submit was clicked");
 
 	let reimbursementTypeInput = document.querySelector("#reimbursement-type");
-	let reimbursementAmountInput = document.querySelector("reimbursement-amount");
-	let reimbursementDescriptionInput = document.querySelector("description");
+	let reimbursementAmountInput = document.querySelector(
+		"#reimbursement-amount"
+	);
+	let reimbursementDescriptionInput = document.querySelector("#description");
 
 	let reimbursementImageInput = document.querySelector("#reimbursement-image");
 
-	const file = reimbursementImageInput.file[0];
+	const file = reimbursementImageInput.files[0];
 
 	let formData = new FormData();
 	formData.append("type", reimbursementTypeInput.value);
@@ -177,3 +173,17 @@ async function submitReimbursement() {
 		reimbursementForm.appendChild(pTag);
 	}
 }
+
+// 	if (res.status === 200) {
+// 		populateTableWithReimbursement();
+// 		console.log(res);
+// 	}
+// 	setTimeout(() => window.location.reload(), 1000);
+// }
+
+// 	if (res.status === 200) {
+// 		populateTableWithReimbursement();
+// 		console.log(res);
+// 	}
+// 	setTimeout(() => window.location.reload(), 1000);
+// }

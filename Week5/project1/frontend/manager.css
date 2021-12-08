@@ -28,9 +28,31 @@
 	margin-top: 10px;
 }
 
+.submit-form {
+	align-content: center;
+	width: 200;
+	align-self: center;
+	display: block;
+}
+
 .h2-header {
 	margin-top: 20px;
 	margin-bottom: 10px;
+}
+
+.line1 {
+	margin-left: 80px;
+}
+
+.adduser {
+	margin-left: 400px;
+	align-content: center;
+	width: 130px;
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+label {
+	margin-left: 120px;
 }
 
 button {
@@ -48,6 +70,7 @@ button:focus {
 
 h2 {
 	margin-bottom: 10px;
+	font-weight: bold;
 }
 .logoutbtn {
 	margin-top: 10px;

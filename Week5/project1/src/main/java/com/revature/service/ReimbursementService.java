@@ -109,6 +109,7 @@ public class ReimbursementService {
 		}
 		// Whoever is logged in will be the actual author of the reimbursement
 		int authorId = currentlyLoggedInUser.getUserId();
+		int amt = Integer.parseInt(amount);
 
 		Reimbursement addedReimbursement = this.reimbursementDao.addReimbursement(description, reimbursementType,
 				submitAmount, authorId, content);
@@ -116,7 +117,7 @@ public class ReimbursementService {
 		return addedReimbursement;
 	}
 
-	public Reimbursement submitReimbursement(User currentlyLoggedInUser, AddReimbursementDTO dto)
+	public Reimbursement submitReimbursement(User currentlyLoggedInUser, Reimbursement dto)
 			throws SQLException, InvalidParameterException {
 
 		int authorId = currentlyLoggedInUser.getUserId();

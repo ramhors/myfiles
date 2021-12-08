@@ -21,18 +21,19 @@ public class ReimbursementDAO {
 	
 	Reimbursement reimbursement = new Reimbursement();
 	
-	public Reimbursement submitReimbursement(AddReimbursementDTO reimbs, int authorId) throws SQLException {
+	public Reimbursement submitReimbursement(Reimbursement reimbs, int authorId) throws SQLException {
 		
 		try (Connection conn = JDBCUtility.getConnection()) {
 			conn.setAutoCommit(false);
 			
-			String sql = "INSERT INTO project1.reimbursement(reimb_amount,reimb_type,reimb_description,reimb_date)VALUES(?,?,?,now())";
+			String sql = "INSERT INTO project1.reimbursement(reimb_amount,reimb_type,reimb_description,,reimb_author,reimb_date)VALUES(?,?,?,?,now())";
 			
 			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			
-			ps.setDouble(1, reimbursement.getAmount());
-			ps.setString(2, reimbursement.getType());
-			ps.setString(3, reimbursement.getDescription());
+			ps.setDouble(1, reimbs.getAmount());
+			ps.setString(2, reimbs.getType());
+			ps.setString(3, reimbs.getDescription());
+			ps.setInt(authorId, authorId);
 			
 			int numberOfRecordInserted = ps.executeUpdate(); 	
 			
@@ -46,7 +47,7 @@ public class ReimbursementDAO {
 			
 			conn.commit();
 			
-			return new Reimbursement( generatedKeyId,reimbs.getAmount(),reimbs.getType(),reimbs.getDescription(),authorId,rs.getString("reimb_date"));
+			return new Reimbursement( generatedKeyId,reimbs.getAmount(),reimbs.getType(),reimbs.getDescription(),reimbs.getAuthor(),rs.getString("reimb_date"));
 	}
 }
 	
@@ -92,10 +93,10 @@ public class ReimbursementDAO {
 	public Reimbursement addReimbursement(String reimbursementType,String description, double amount,  int authorId, InputStream image) throws SQLException {
 		
 			try (Connection conn = JDBCUtility.getConnection()) {
-			Reimbursement reimbursement = new Reimbursement();
+		
 			conn.setAutoCommit(false);			
 		
-			String sql = "INSERT INTO reimbursement(reimb_amount,reimb_date,reimb_type,reimb_description,reimb_author,reimb_receipt)VALUES(?,now(),?,?,?,?)";
+			String sql = "INSERT INTO project1.reimbursement(reimb_amount,reimb_date,reimb_type,reimb_description,reimb_author,reimb_receipt)VALUES(?,now(),?,?,?,?)";
 
 			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
